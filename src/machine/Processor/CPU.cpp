@@ -2,15 +2,14 @@
 // Created by timun on 07/10/2018.
 //
 
-#include <cstdio>
+
 #include "CPU.h"
-#include "instructions/instructions.h"
 
 
 // Fetch Decode Execute Cycle
 
 CPU::CPU() {
-    instructionset = new instructions();
+
 }
 
 short CPU::tick(RAM &ram) {
@@ -25,7 +24,7 @@ void CPU::fetch(RAM &ram) {
 }
 
 void CPU::decode() {
-    opcode = (instructionregister & 0xF0) >> 4;
+    opcode = (instructionregister & 0xF0) >> 0x04;
     operand = instructionregister & 0x0F;
 }
 
@@ -33,29 +32,33 @@ void CPU::decode() {
 void CPU::execute(RAM &ram) {
     switch (opcode) {
         case 0x00 :
-            instructionset->HLT(this, operand);
+            HLT(operand);
             break;
         case 0x01 :
-            instructionset->NOP(this, operand);
+            NOP(operand);
             break;
         case 0x02 :
-            instructionset->JMP(this, operand);
+            JMP(operand);
             break;
         case 0x03 :
-            instructionset->MOV(this, operand);
+            MOV(operand);
             break;
         case 0x04 :
-            instructionset->ADD(this, operand);
+            ADD(operand);
             break;
         case 0x05 :
-            instructionset->SUB(this, operand);
+            SUB(operand);
             break;
         case 0x06 :
-            instructionset->MUL(this, operand);
+            MUL(operand);
             break;
         case 0x07 :
-            instructionset->DIV(this, operand);
+            DIV(operand);
             break;
+        case 0x08 :
+            MOD(operand);
+            break;
+
 
         default:
             printf("No instr");
@@ -63,6 +66,51 @@ void CPU::execute(RAM &ram) {
     }
 
 }
+
+
+void CPU::HLT(short operand) {
+    setFlags(0x01);
+}
+
+void CPU::NOP(short operand) {
+
+    setFlags(0x00);
+}
+
+void CPU::JMP(short operand) {
+    setProgramcounter(operand);
+    setFlags(0x00);
+}
+
+void CPU::MOV(short operand) {
+    setFlags(0x00);
+}
+
+void CPU::ADD(short operand) {
+    setRegister_a(getRegister_a() + operand);
+    setFlags(0x00);
+}
+
+void CPU::SUB(short operand) {
+    setRegister_a(getRegister_a() - operand);
+    setFlags(0x00);
+}
+
+void CPU::MUL(short operand) {
+    setRegister_a(getRegister_a() * operand);
+    setFlags(0x00);
+}
+
+void CPU::DIV(short operand) {
+    setRegister_a(getRegister_a() / operand);
+    setFlags(0x00);
+}
+
+void CPU::MOD(short operand) {
+    setRegister_a(getRegister_a() % operand);
+    setFlags(0x00);
+}
+
 
 short CPU::getFlags() {
     return flags;

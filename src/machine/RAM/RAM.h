@@ -21,6 +21,8 @@ public:
 
     void setByte(short loc, char data);
 
+    void loadProg(char *data, short size);
+
     short getMaxRAM();
 };
 

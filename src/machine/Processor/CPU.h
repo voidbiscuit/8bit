@@ -5,8 +5,9 @@
 #ifndef INC_8BIT_CPU_H
 #define INC_8BIT_CPU_H
 
+#include <cstdio>
+
 #include "../RAM/RAM.h"
-#include "instructions/instructions.h"
 
 class CPU {
 public:
@@ -22,22 +23,42 @@ private:
     void execute(RAM &ram);
 
 private:
-    // Instructions
-    instructions *instructionset;
-
     // Data
+    short programcounter = 0;
+    short instructionregister = 0;
     short register_a = 0;
     short register_b = 0;
     short register_c = 0;
     short register_d = 0;
-    short programcounter = 0;
-    short instructionregister = 0;
+
 
     // Decode/Execute
     short opcode = 0;
     short operand = 0;
     short flags = 0;
 
+
+private:
+    void HLT(short operand);
+
+    void NOP(short operand);
+
+    void JMP(short operand);
+
+    void MOV(short operand);
+
+    void ADD(short operand);
+
+    void SUB(short operand);
+
+    void MUL(short operand);
+
+    void DIV(short operand);
+
+    void MOD(short operand);
+
+
+    // Getters and Setters
 public:
     short getFlags();
 

@@ -15,23 +15,26 @@ public:
     // Constructor
     machine(short size);
 
-    // Tests
-    void testMachine();
-
-    // Machine Properties
 protected:
+    // Machine Properties
     RAM *ram;
     CPU *cpu;
     output *display;
 
-    // Initialise
 private:
-
+    // Initialise
     void allocRAM(short size);
 
     void initProcessor();
 
     void setIO();
+
+public:
+    // IO
+    void showOut();
+
+    // Tests
+    void testMachine();
 };
 
 

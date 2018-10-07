@@ -9,14 +9,19 @@
 #include <cstdlib>
 
 #include "../RAM/RAM.h"
+#include "../Processor/CPU.h"
 
 class output {
-public:
-    char *getByte(char c);
-
-    void printByte(char c);
+private:
+    void printByte(short c);
 
     void dispRAM(RAM &ram);
+
+    void dispCPU(CPU &cpu);
+
+public:
+    void dispSystem(CPU &cpu, RAM &ram);
+
 };
 
 

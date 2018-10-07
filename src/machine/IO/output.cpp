@@ -4,22 +4,7 @@
 
 #include "output.h"
 
-
-char *output::getByte(char c) {
-    char ret[8] = {
-            c >> 7 & true ? '1' : '0',
-            c >> 6 & true ? '1' : '0',
-            c >> 5 & true ? '1' : '0',
-            c >> 4 & true ? '1' : '0',
-            c >> 3 & true ? '1' : '0',
-            c >> 2 & true ? '1' : '0',
-            c >> 1 & true ? '1' : '0',
-            c >> 0 & true ? '1' : '0'
-    };
-    return ret;
-}
-
-void output::printByte(char c) {
+void output::printByte(short c) {
     printf(
             // Format
             "%c%c%c%c%c%c%c%c",
@@ -43,4 +28,28 @@ void output::dispRAM(RAM &ram) {
         printf(" ");
         printByte(ram.getByte(reg));
     }
+}
+
+void output::dispCPU(CPU &cpu) {
+    // Flow
+    printf("\n\nProgram Counter      : ");
+    printByte(cpu.getProgramcounter());
+    printf("\nInstruction Register : ");
+    printByte(cpu.getInstructionregister());
+    printf("\n\n");
+    // Data
+    printf(" A : ");
+    printByte(cpu.getRegister_a());
+    printf(" B : ");
+    printByte(cpu.getRegister_b());
+    printf(" C : ");
+    printByte(cpu.getRegister_c());
+    printf(" D : ");
+    printByte(cpu.getRegister_d());
+}
+
+void output::dispSystem(CPU &cpu, RAM &ram) {
+    printf("\n\n\n");
+    dispCPU(cpu);
+    dispRAM(ram);
 }

@@ -27,10 +27,25 @@ void machine::setIO() {
     display = new output();
 }
 
+// Output
+
+void machine::showOut() {
+    display->dispSystem(*cpu, *ram);
+}
+
 
 // Test
 void machine::testMachine() {
-    display->dispRAM(*ram);
-    ram->setByte(12, 12);
-    display->dispRAM(*ram);
+    showOut();
+    char program[] = {
+            0x4F,
+            0x4A,
+            0x53
+    };
+    ram->loadProg(program, sizeof(program));
+    while (cpu->getFlags() == 0x00) {
+        showOut();
+        cpu->tick(*ram);
+    }
+    showOut();
 }

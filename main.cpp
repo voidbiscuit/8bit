@@ -8,7 +8,7 @@ int main() {
     machine1->dispRAM();
     machine1->testMachine();
     machine1->dispRAM();
-    return 0 ;
+    return 0;
 }
 
 

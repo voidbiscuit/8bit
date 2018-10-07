@@ -4,34 +4,46 @@
 
 #include "instructions.h"
 
-void instructions::HLT(RAM &ram, CPU &cpu) {
+instructions::instructions() {
 
 }
 
-void instructions::NOP(RAM &ram, CPU &cpu) {
+void instructions::HLT(CPU &cpu, short operand) {
 
+    cpu.setFlags(0x01);
 }
 
-void instructions::JMP(RAM &ram, CPU &cpu) {
+void instructions::NOP(CPU &cpu, short operand) {
 
+    cpu.setFlags(0x00);
 }
 
-void instructions::MOV(RAM &ram, CPU &cpu) {
-
+void instructions::JMP(CPU &cpu, short operand) {
+    cpu.setProgramcounter(operand);
+    cpu.setFlags(0x00);
 }
 
-void instructions::ADD(RAM &ram, CPU &cpu) {
+void instructions::MOV(CPU &cpu, short operand) {
 
+    cpu.setFlags(0x00);
 }
 
-void instructions::SUB(RAM &ram, CPU &cpu) {
+void instructions::ADD(CPU &cpu, short operand) {
 
+    cpu.setFlags(0x00);
 }
 
-void instructions::MUL(RAM &ram, CPU &cpu) {
+void instructions::SUB(CPU &cpu, short operand) {
 
+    cpu.setFlags(0x00);
 }
 
-void instructions::DIV(RAM &ram, CPU &cpu) {
+void instructions::MUL(CPU &cpu, short operand) {
 
+    cpu.setFlags(0x00);
+}
+
+void instructions::DIV(CPU &cpu, short operand) {
+
+    cpu.setFlags(0x00);
 }

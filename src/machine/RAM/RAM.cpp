@@ -5,8 +5,6 @@
 
 #include "RAM.h"
 
-#include <array>
-
 RAM::RAM(short size) {
     RAM::size = size;
     RAM::data = (char *) calloc(size, 1);

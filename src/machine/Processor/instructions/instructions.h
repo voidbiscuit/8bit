@@ -10,23 +10,24 @@
 #include "../CPU.h"
 
 class instructions {
-
 public:
-    void HLT(RAM &ram, CPU &cpu);
+    instructions();
 
-    void NOP(RAM &ram, CPU &cpu);
+    void HLT(CPU &cpu, short operand);
 
-    void JMP(RAM &ram, CPU &cpu);
+    void NOP(CPU &cpu, short operand);
 
-    void MOV(RAM &ram, CPU &cpu);
+    void JMP(CPU &cpu, short operand);
 
-    void ADD(RAM &ram, CPU &cpu);
+    void MOV(CPU &cpu, short operand);
 
-    void SUB(RAM &ram, CPU &cpu);
+    void ADD(CPU &cpu, short operand);
 
-    void MUL(RAM &ram, CPU &cpu);
+    void SUB(CPU &cpu, short operand);
 
-    void DIV(RAM &ram, CPU &cpu);
+    void MUL(CPU &cpu, short operand);
+
+    void DIV(CPU &cpu, short operand);
 
 };
 

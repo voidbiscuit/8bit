@@ -33,30 +33,29 @@ void CPU::decode() {
 void CPU::execute(RAM &ram) {
     switch (opcode) {
         case 0x00 :
-            instructionset->HLT(ram, this);
+            instructionset->HLT(this, operand);
             break;
         case 0x01 :
-            instructionset->NOP(ram, this);
+            instructionset->NOP(this, operand);
             break;
         case 0x02 :
-            instructionset->JMP(ram, this);
+            instructionset->JMP(this, operand);
             break;
         case 0x03 :
-            instructionset->MOV(ram, this);
+            instructionset->MOV(this, operand);
             break;
         case 0x04 :
-            instructionset->ADD(ram, this);
+            instructionset->ADD(this, operand);
             break;
         case 0x05 :
-            instructionset->SUB(ram, this);
+            instructionset->SUB(this, operand);
             break;
         case 0x06 :
-            instructionset->MUL(ram, this);
+            instructionset->MUL(this, operand);
             break;
         case 0x07 :
-            instructionset->DIV(ram, this);
+            instructionset->DIV(this, operand);
             break;
-
 
         default:
             printf("No instr");
@@ -72,3 +71,53 @@ short CPU::getFlags() {
 void CPU::setFlags(short flags) {
     CPU::flags = flags;
 }
+
+short CPU::getRegister_a() {
+    return register_a;
+}
+
+void CPU::setRegister_a(short register_a) {
+    CPU::register_a = register_a;
+}
+
+short CPU::getRegister_b() {
+    return register_b;
+}
+
+void CPU::setRegister_b(short register_b) {
+    CPU::register_b = register_b;
+}
+
+short CPU::getRegister_c() {
+    return register_c;
+}
+
+void CPU::setRegister_c(short register_c) {
+    CPU::register_c = register_c;
+}
+
+short CPU::getRegister_d() {
+    return register_d;
+}
+
+void CPU::setRegister_d(short register_d) {
+    CPU::register_d = register_d;
+}
+
+short CPU::getProgramcounter() {
+    return programcounter;
+}
+
+void CPU::setProgramcounter(short programcounter) {
+    CPU::programcounter = programcounter;
+}
+
+short CPU::getInstructionregister() {
+    return instructionregister;
+}
+
+void CPU::setInstructionregister(short instructionregister) {
+    CPU::instructionregister = instructionregister;
+}
+
+

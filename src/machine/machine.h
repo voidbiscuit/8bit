@@ -6,26 +6,30 @@
 #define INC_8BIT_MACHINE_H
 
 #include "RAM/RAM.h"
+#include "Processor/CPU.h"
 #include "IO/output.h"
+
 
 class machine {
 public:
     // Constructor
     machine(short size);
 
-    // IO
-    void dispRAM();
-
     // Tests
     void testMachine();
 
-private:
     // Machine Properties
+protected:
     RAM *ram;
+    CPU *cpu;
     output *display;
 
     // Initialise
+private:
+
     void allocRAM(short size);
+
+    void initProcessor();
 
     void setIO();
 };

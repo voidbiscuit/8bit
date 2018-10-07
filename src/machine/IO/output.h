@@ -5,15 +5,18 @@
 #ifndef INC_8BIT_OUTPUT_H
 #define INC_8BIT_OUTPUT_H
 
+#include <cstdio>
+#include <cstdlib>
+
+#include "../RAM/RAM.h"
+
 class output {
 public:
-    static char *getByte(char c);
+    char *getByte(char c);
 
-    static void printByte(char c);
+    void printByte(char c);
 
-
-private:
-    static void writeBytesAllMethods(char c);
+    void dispRAM(RAM &ram);
 };
 
 

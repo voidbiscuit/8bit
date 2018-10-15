@@ -13,7 +13,7 @@ class CPU {
 public:
     CPU();
 
-    short tick(RAM &ram);
+    unsigned short tick(RAM &ram);
 
 private:
     void fetch(RAM &ram);
@@ -24,69 +24,65 @@ private:
 
 private:
     // Data
-    short programcounter = 0;
-    short instructionregister = 0;
-    short register_a = 0;
-    short register_b = 0;
-    short register_c = 0;
-    short register_d = 0;
+    unsigned short programcounter = 0;
+    unsigned short opcode = 0;
+    unsigned short operand = 0;
+    unsigned short currentreg = 0;
+    unsigned short registers[16] =
+            {
+                    0x00, 0x00, 0x00, 0x00,
+                    0x00, 0x00, 0x00, 0x00,
+                    0x00, 0x00, 0x00, 0x00,
+                    0x00, 0x00, 0x00, 0x00
+            };
 
-
-    // Decode/Execute
-    short opcode = 0;
-    short operand = 0;
-    short flags = 0;
+    unsigned short flags = 0;
 
 
 private:
-    void HLT(short operand);
+    void HLT(unsigned short operand);
 
-    void NOP(short operand);
+    void NOP(unsigned short operand);
 
-    void JMP(short operand);
+    void JMP(unsigned short operand);
 
-    void MOV(short operand);
+    void MOV(unsigned short operand);
 
-    void ADD(short operand);
+    void ADD(unsigned short operand, RAM &ram);
 
-    void SUB(short operand);
+    void SUB(unsigned short operand, RAM &ram);
 
-    void MUL(short operand);
+    void MUL(unsigned short operand, RAM &ram);
 
-    void DIV(short operand);
+    void DIV(unsigned short operand, RAM &ram);
 
-    void MOD(short operand);
+    void MOD(unsigned short operand, RAM &ram);
 
 
     // Getters and Setters
 public:
-    short getFlags();
+    // Registers
+    unsigned short getRegisters(unsigned short reg);
 
-    void setFlags(short flags);
+    unsigned short getCurrentRegVal();
 
-    short getRegister_a();
+    unsigned short getCurrentReg();
 
-    void setRegister_a(short register_a);
+    void changeCurrentReg(unsigned short reg);
 
-    short getRegister_b();
+    void setCurrentReg(unsigned short val);
 
-    void setRegister_b(short register_b);
+    // Flags
+    unsigned short getFlags();
 
-    short getRegister_c();
+    void setFlags(unsigned short flags);
 
-    void setRegister_c(short register_c);
 
-    short getRegister_d();
+    unsigned short getOPcode();
 
-    void setRegister_d(short register_d);
+    unsigned short getOPerand();
 
-    short getProgramcounter();
-
-    void setProgramcounter(short programcounter);
-
-    short getInstructionregister();
-
-    void setInstructionregister(short instructionregister);
+    unsigned short getProgramCounter();
 };
 
 

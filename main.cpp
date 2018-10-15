@@ -1,10 +1,10 @@
 #include <iostream>
 #include "src/machine/machine.h"
+#include "test.h"
 
-#define RAM 128
 
 int main() {
-    machine *machine1 = new machine(RAM);
+    machine *machine1 = new machine();
     machine1->testMachine();
     return 0;
 }

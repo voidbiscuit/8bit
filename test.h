@@ -9,12 +9,6 @@
 class test {
 public:
     test();
-
-    void testPointers();
-
-    int addtwo(int x);
-
-    void addtwoptr(int & x);
 };
 
 

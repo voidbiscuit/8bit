@@ -4,19 +4,16 @@
 
 #include "machine.h"
 
-#include <cstdio>
-#include <string>
-
 // Constructor
-machine::machine(short size) {
-    allocRAM(size);
+machine::machine() {
+    allocRAM();
     initProcessor();
     setIO();
 }
 
 // Initialise
-void machine::allocRAM(short size) {
-    ram = new RAM(size);
+void machine::allocRAM() {
+    ram = new RAM();
 }
 
 void machine::initProcessor() {
@@ -36,13 +33,10 @@ void machine::showOut() {
 
 // Test
 void machine::testMachine() {
-    showOut();
-    char program[] = {
-            0x4F,
-            0x4A,
-            0x53
+    unsigned char program[256] = {
+            0x40, 0x03, 0x00, 0x00, 0xFF, 0XFF
     };
-    ram->loadProg(program, sizeof(program));
+    ram->loadProg(program);
     while (cpu->getFlags() == 0x00) {
         showOut();
         cpu->tick(*ram);

@@ -13,14 +13,15 @@
 
 class output {
 private:
-    void printByte(short c);
+    const unsigned short columns = 16;
 
-    void dispRAM(RAM &ram);
+    unsigned char retHex(unsigned short c);
 
-    void dispCPU(CPU &cpu);
 
 public:
+
     void dispSystem(CPU &cpu, RAM &ram);
+
 
 };
 

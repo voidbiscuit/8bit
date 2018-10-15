@@ -12,24 +12,28 @@ CPU::CPU() {
 
 }
 
-short CPU::tick(RAM &ram) {
+// CPU Processing
+unsigned short CPU::tick(RAM &ram) {
     fetch(ram);
     decode();
     execute(ram);
     return flags;
 }
 
+// Fetch Decode Execute Cycle
 void CPU::fetch(RAM &ram) {
-    instructionregister = ram.getByte(programcounter++);
+    opcode = ram.getByte(programcounter++); // Fetch
+    operand = ram.getByte(programcounter++); // Fetch
 }
 
 void CPU::decode() {
-    opcode = (instructionregister & 0xF0) >> 0x04;
-    operand = instructionregister & 0x0F;
+    currentreg = opcode & 0x0F;
+    opcode >>= 4;
 }
 
-
 void CPU::execute(RAM &ram) {
+
+
     switch (opcode) {
         case 0x00 :
             HLT(operand);
@@ -44,128 +48,111 @@ void CPU::execute(RAM &ram) {
             MOV(operand);
             break;
         case 0x04 :
-            ADD(operand);
+            ADD(operand, ram);
             break;
         case 0x05 :
-            SUB(operand);
+            SUB(operand, ram);
             break;
         case 0x06 :
-            MUL(operand);
+            MUL(operand, ram);
             break;
         case 0x07 :
-            DIV(operand);
+            DIV(operand, ram);
             break;
         case 0x08 :
-            MOD(operand);
+            MOD(operand, ram);
             break;
-
-
         default:
-            printf("No instr");
+            HLT(operand);
             break;
     }
 
 }
 
 
-void CPU::HLT(short operand) {
+void CPU::HLT(unsigned short operand) {
+    programcounter = 0;
     setFlags(0x01);
 }
 
-void CPU::NOP(short operand) {
+void CPU::NOP(unsigned short operand) {
+    setFlags(0x00);
+}
+
+void CPU::JMP(unsigned short operand) {
+    programcounter = operand;
+    if (programcounter % 2 != 0) programcounter--;
+    setFlags(0x00);
+}
+
+void CPU::MOV(unsigned short operand) {
 
     setFlags(0x00);
 }
 
-void CPU::JMP(short operand) {
-    setProgramcounter(operand);
+void CPU::ADD(unsigned short operand, RAM &ram) {
+    setCurrentReg(getCurrentRegVal() + ram.getByte(operand));
     setFlags(0x00);
 }
 
-void CPU::MOV(short operand) {
+void CPU::SUB(unsigned short operand, RAM &ram) {
+    setCurrentReg(getCurrentRegVal() - ram.getByte(operand));
     setFlags(0x00);
 }
 
-void CPU::ADD(short operand) {
-    setRegister_a(getRegister_a() + operand);
+void CPU::MUL(unsigned short operand, RAM &ram) {
+    setCurrentReg(getCurrentRegVal() * ram.getByte(operand));
     setFlags(0x00);
 }
 
-void CPU::SUB(short operand) {
-    setRegister_a(getRegister_a() - operand);
+void CPU::DIV(unsigned short operand, RAM &ram) {
+    setCurrentReg(getCurrentRegVal() / ram.getByte(operand));
     setFlags(0x00);
 }
 
-void CPU::MUL(short operand) {
-    setRegister_a(getRegister_a() * operand);
-    setFlags(0x00);
-}
-
-void CPU::DIV(short operand) {
-    setRegister_a(getRegister_a() / operand);
-    setFlags(0x00);
-}
-
-void CPU::MOD(short operand) {
-    setRegister_a(getRegister_a() % operand);
+void CPU::MOD(unsigned short operand, RAM &ram) {
+    setCurrentReg(getCurrentRegVal() % ram.getByte(operand));
     setFlags(0x00);
 }
 
 
-short CPU::getFlags() {
+unsigned short CPU::getFlags() {
     return flags;
 }
 
-void CPU::setFlags(short flags) {
+void CPU::setFlags(unsigned short flags) {
     CPU::flags = flags;
 }
 
-short CPU::getRegister_a() {
-    return register_a;
+unsigned short CPU::getRegisters(unsigned short reg) {
+    return registers[reg];
 }
 
-void CPU::setRegister_a(short register_a) {
-    CPU::register_a = register_a;
+unsigned short CPU::getCurrentRegVal() {
+    return registers[currentreg];
 }
 
-short CPU::getRegister_b() {
-    return register_b;
+unsigned short CPU::getCurrentReg() {
+    return currentreg;
 }
 
-void CPU::setRegister_b(short register_b) {
-    CPU::register_b = register_b;
+void CPU::changeCurrentReg(unsigned short reg) {
+    currentreg = reg;
 }
 
-short CPU::getRegister_c() {
-    return register_c;
+void CPU::setCurrentReg(unsigned short val) {
+    registers[currentreg] = val;
 }
 
-void CPU::setRegister_c(short register_c) {
-    CPU::register_c = register_c;
-}
-
-short CPU::getRegister_d() {
-    return register_d;
-}
-
-void CPU::setRegister_d(short register_d) {
-    CPU::register_d = register_d;
-}
-
-short CPU::getProgramcounter() {
+unsigned short CPU::getProgramCounter() {
     return programcounter;
 }
 
-void CPU::setProgramcounter(short programcounter) {
-    CPU::programcounter = programcounter;
+unsigned short CPU::getOPcode() {
+    return opcode;
 }
 
-short CPU::getInstructionregister() {
-    return instructionregister;
+unsigned short CPU::getOPerand() {
+    return operand;
 }
-
-void CPU::setInstructionregister(short instructionregister) {
-    CPU::instructionregister = instructionregister;
-}
-
 

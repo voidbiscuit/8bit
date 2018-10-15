@@ -6,24 +6,27 @@
 #define INC_8BIT_RAM_H
 
 #include <cstdlib>
+#include <cstdint>
 
 
 class RAM {
 
 private:
-    char *data;
-    short size;
+    unsigned char *data;
+    const unsigned short maxaddr = 255;
 
 public:
-    RAM(short size);
+    RAM();
 
-    char getByte(short loc);
+    void clearRAM();
 
-    void setByte(short loc, char data);
+    unsigned char getByte(unsigned short addr);
 
-    void loadProg(char *data, short size);
+    void setByte(unsigned short addr, unsigned char data);
 
-    short getMaxRAM();
+    void loadProg(unsigned char *data);
+
+    unsigned short getMaxAddr();
 };
 
 #endif //INC_8BIT_RAM_H

@@ -13,7 +13,7 @@
 class machine {
 public:
     // Constructor
-    machine(short size);
+    machine();
 
 protected:
     // Machine Properties
@@ -23,7 +23,7 @@ protected:
 
 private:
     // Initialise
-    void allocRAM(short size);
+    void allocRAM();
 
     void initProcessor();
 

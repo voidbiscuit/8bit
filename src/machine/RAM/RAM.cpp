@@ -1,32 +1,35 @@
 //
 // Created by timun on 05/10/2018.
 //
-
-
 #include <cstring>
 #include "RAM.h"
 
-RAM::RAM(short size) {
-    RAM::size = size;
-    RAM::data = (char *) calloc(size, 1);
-    memset(data, 0x00, size);
+RAM::RAM() {
+    RAM::data = (unsigned char *) calloc(maxaddr, 1);
+    clearRAM();
 }
 
-char RAM::getByte(short loc) {
-    return data[loc];
+void RAM::clearRAM() {
+    memset(data, 0x00, maxaddr + 1);
 }
 
-void RAM::setByte(short loc, char newdata) {
-    data[loc] = newdata;
+unsigned char RAM::getByte(unsigned short addr) {
+    return data[addr];
 }
 
-void RAM::loadProg(char *data, short length) {
-    for (short i = 0; i < length; i++)
+void RAM::setByte(unsigned short addr, unsigned char newdata) {
+    data[addr] = newdata;
+}
+
+void RAM::loadProg(unsigned char *data) {
+    clearRAM();
+    for (unsigned short i = 0; i <= maxaddr; i++) {
         setByte(i, data[i]);
+    }
 }
 
-short RAM::getMaxRAM() {
-    return size;
+unsigned short RAM::getMaxAddr() {
+    return maxaddr;
 }
 
 
